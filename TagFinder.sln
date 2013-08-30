@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2012 for Windows Desktop
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagFinder", "TagFinder\TagFinder.csproj", "{6EEB36E5-B09D-4D75-858B-B0C3E7611B56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6EEB36E5-B09D-4D75-858B-B0C3E7611B56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EEB36E5-B09D-4D75-858B-B0C3E7611B56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EEB36E5-B09D-4D75-858B-B0C3E7611B56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EEB36E5-B09D-4D75-858B-B0C3E7611B56}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
