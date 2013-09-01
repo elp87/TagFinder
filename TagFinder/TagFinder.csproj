@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="elp87.TagReader">
-      <HintPath>..\..\..\TagReader\elp87.TagReader\bin\Release\elp87.TagReader.dll</HintPath>
+      <HintPath>..\..\TagReader\elp87.TagReader\bin\Release\elp87.TagReader.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
