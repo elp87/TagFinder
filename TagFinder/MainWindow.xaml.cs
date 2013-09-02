@@ -36,7 +36,6 @@ namespace WpfApplication4
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             UpdateProgressBarDelegate updProgress = new UpdateProgressBarDelegate(progressBar.SetValue);
-            //File.Create(reportFile);
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(reportFile))
             {
                 double value = 0;
@@ -48,40 +47,21 @@ namespace WpfApplication4
                         MP3File mp3 = new MP3File(fileName);
                         if (mp3.id3v2.header.flagField.extendedHeader)
                         {
-                            file.WriteLine(fileName);
+                            file.WriteLine("SUCCESS - " + fileName);
                         }
                     }
                     catch (elp87.TagReader.id3v2.Exceptions.UnsupportedTagVersionException) { }
                     catch (System.Exception ex)
                     {
-                        //System.Windows.MessageBox.Show(ex.Message);
                         file.WriteLine(fileName + " - " + ex.Message);
                     }
                 }
             }
-            System.Windows.MessageBox.Show("Искомых файлов не найдено");
+            System.Windows.MessageBox.Show("Закончено");
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            /*OpenFileDialog openfileDialog = new OpenFileDialog();
-            openfileDialog.FileName = "Document";
-            openfileDialog.DefaultExt = ".mp3";
-            openfileDialog.Filter = "mp3 file (*.mp3)|*.mp3";
-            bool? result = openfileDialog.ShowDialog();
-            if (result == true)
-            {
-                MP3File mp3 = new MP3File(openfileDialog.FileName);
-                string artist = mp3.id3v2.performer;
-                string title = mp3.id3v2.title;
-                string album = mp3.id3v2.album;
-                
-
-                textBoxArtist.Text = artist;
-                textBoxAlbum.Text = album;
-                textBoxTitle.Text = title;
-                
-            }*/
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
