@@ -34,8 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="elp87.TagReader">
-      <HintPath>..\..\TagReader\elp87.TagReader\bin\Release\elp87.TagReader.dll</HintPath>
+    <Reference Include="elp87.TagReader, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\TagReader\elp87.TagReader\bin\Release\elp87.TagReader.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

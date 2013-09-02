@@ -51,6 +51,7 @@ namespace WpfApplication4
                         }
                     }
                     catch (elp87.TagReader.id3v2.Exceptions.UnsupportedTagVersionException) { }
+                    catch (elp87.TagReader.id3v2.Exceptions.NoID3V2TagException) { }
                     catch (System.Exception ex)
                     {
                         file.WriteLine(fileName + " - " + ex.Message);
