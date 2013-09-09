@@ -1,10 +1,11 @@
 ﻿using elp87.TagReader;
 using Microsoft.Win32;
 using System.ComponentModel;
-using System.Drawing;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 
@@ -23,6 +24,7 @@ namespace WpfApplication4
     {
         const string reportFile = @"D:\testReport.txt";
         BackgroundWorker worker;
+        Image catImage;
         string path;
         string[] _fileNames;
 
@@ -30,12 +32,32 @@ namespace WpfApplication4
         {
             InitializeComponent();
             worker = new BackgroundWorker();
-            worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+            worker.DoWork += new DoWorkEventHandler(worker_DoWork);            
+        }
+
+        void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            throw new System.NotImplementedException();
+            
         }
 
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             UpdateProgressBarDelegate updProgress = new UpdateProgressBarDelegate(progressBar.SetValue);
+
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new System.Action(() =>
+                {
+                    catImage = new Image();
+                    WpfAnimatedGif.ImageBehavior.SetAnimatedSource(catImage, new BitmapImage(new System.Uri("walkingcat_white.gif", System.UriKind.RelativeOrAbsolute)));
+                    catImage.Source = new BitmapImage(new System.Uri("walkingcat_white.gif", System.UriKind.RelativeOrAbsolute));
+                    catImage.Width = 300;
+                    catImage.Height = 300;
+                    catImage.Margin = new Thickness(0, 100, 0, 0);
+                    catImage.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                    grid.Children.Add(catImage);
+                }
+            ));
+
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(reportFile))
             {
                 double value = 0;
@@ -58,6 +80,12 @@ namespace WpfApplication4
                     }
                 }
             }
+            
+            Dispatcher.Invoke(DispatcherPriority.Normal, new System.Action(() =>
+                {
+                    grid.Children.Remove(catImage);
+                }
+                ));
             System.Windows.MessageBox.Show("Закончено");
         }
 
@@ -66,12 +94,14 @@ namespace WpfApplication4
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                
+                cdImage.Visibility = System.Windows.Visibility.Visible;
                 path = fbd.SelectedPath;
                 _fileNames = Directory.GetFiles(path, "*.mp3", SearchOption.AllDirectories);
                 progressBar.Maximum = _fileNames.Length;
                 progressBar.Value = 0;
                 worker.RunWorkerAsync();
+                cdImage.Visibility = System.Windows.Visibility.Hidden;
+                
             }
         }
     }
