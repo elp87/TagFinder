@@ -1,5 +1,4 @@
 ﻿using elp87.TagReader;
-using Microsoft.Win32;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
@@ -12,16 +11,14 @@ using System.Windows.Threading;
 namespace WpfApplication4
 {
 
-    delegate void UpdateProgressBarDelegate(DependencyProperty dp, object value);
-
-
-    //Создание делегата и привязка к изменению свойства
 
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        delegate void UpdateProgressBarDelegate(DependencyProperty dp, object value);
+
         const string reportFile = @"D:\testReport.txt";
         BackgroundWorker worker;
         Image catImage;
@@ -32,31 +29,14 @@ namespace WpfApplication4
         {
             InitializeComponent();
             worker = new BackgroundWorker();
-            worker.DoWork += new DoWorkEventHandler(worker_DoWork);            
-        }
-
-        void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            throw new System.NotImplementedException();
-            
+            worker.DoWork += new DoWorkEventHandler(worker_DoWork);
         }
 
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             UpdateProgressBarDelegate updProgress = new UpdateProgressBarDelegate(progressBar.SetValue);
 
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new System.Action(() =>
-                {
-                    catImage = new Image();
-                    WpfAnimatedGif.ImageBehavior.SetAnimatedSource(catImage, new BitmapImage(new System.Uri("walkingcat_white.gif", System.UriKind.RelativeOrAbsolute)));
-                    catImage.Source = new BitmapImage(new System.Uri("walkingcat_white.gif", System.UriKind.RelativeOrAbsolute));
-                    catImage.Width = 300;
-                    catImage.Height = 300;
-                    catImage.Margin = new Thickness(0, 100, 0, 0);
-                    catImage.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-                    grid.Children.Add(catImage);
-                }
-            ));
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new System.Action(() => addCatImage() ));
 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(reportFile))
             {
@@ -80,12 +60,8 @@ namespace WpfApplication4
                     }
                 }
             }
-            
-            Dispatcher.Invoke(DispatcherPriority.Normal, new System.Action(() =>
-                {
-                    grid.Children.Remove(catImage);
-                }
-                ));
+
+            Dispatcher.Invoke(DispatcherPriority.Normal, new System.Action(() => grid.Children.Remove(catImage) ));
             System.Windows.MessageBox.Show("Закончено");
         }
 
@@ -94,15 +70,23 @@ namespace WpfApplication4
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                cdImage.Visibility = System.Windows.Visibility.Visible;
                 path = fbd.SelectedPath;
                 _fileNames = Directory.GetFiles(path, "*.mp3", SearchOption.AllDirectories);
                 progressBar.Maximum = _fileNames.Length;
                 progressBar.Value = 0;
                 worker.RunWorkerAsync();
-                cdImage.Visibility = System.Windows.Visibility.Hidden;
-                
             }
+        }
+
+        private void addCatImage()
+        {
+            catImage = new Image();
+            WpfAnimatedGif.ImageBehavior.SetAnimatedSource(catImage, new BitmapImage(new System.Uri("walkingcat_white.gif", System.UriKind.RelativeOrAbsolute)));
+            catImage.Width = 300;
+            catImage.Height = 300;
+            catImage.Margin = new Thickness(0, 100, 0, 0);
+            catImage.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            grid.Children.Add(catImage);
         }
     }
 }

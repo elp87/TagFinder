@@ -8,8 +8,6 @@
         <TextBox x:Name="textBoxArtist" Height="23" Margin="10,47,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBox x:Name="textBoxAlbum" Height="23" Margin="10,87,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBox x:Name="textBoxTitle" Height="23" Margin="10,127,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <Image x:Name="cdImage" HorizontalAlignment="Center" Margin="10,169,0,0" VerticalAlignment="Top" Width="300" Height="300" Visibility="Hidden" gif:ImageBehavior.AnimatedSource="walkingcat_white.gif"/>
         <ProgressBar x:Name="progressBar" Height="19" Margin="10,503,10,0" VerticalAlignment="Top" RenderTransformOrigin="-0.12,0.368"/>
-
     </Grid>
 </Window>
