@@ -19,7 +19,7 @@ namespace WpfApplication4
     {
         delegate void UpdateProgressBarDelegate(DependencyProperty dp, object value);
 
-        const string reportFile = @"D:\testReport.txt";
+        string reportFile;
         BackgroundWorker worker;
         Image catImage;
         string path;
@@ -68,13 +68,21 @@ namespace WpfApplication4
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.FileName = "Document";
+            sfd.DefaultExt = ".txt";
+            sfd.Filter = "файл портфеля (*.txt)|*.txt";
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                path = fbd.SelectedPath;
-                _fileNames = Directory.GetFiles(path, "*.mp3", SearchOption.AllDirectories);
-                progressBar.Maximum = _fileNames.Length;
-                progressBar.Value = 0;
-                worker.RunWorkerAsync();
+                if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    reportFile = sfd.FileName;
+                    path = fbd.SelectedPath;
+                    _fileNames = Directory.GetFiles(path, "*.mp3", SearchOption.AllDirectories);
+                    progressBar.Maximum = _fileNames.Length;
+                    progressBar.Value = 0;
+                    worker.RunWorkerAsync();
+                }
             }
         }
 
@@ -84,8 +92,9 @@ namespace WpfApplication4
             WpfAnimatedGif.ImageBehavior.SetAnimatedSource(catImage, new BitmapImage(new System.Uri("walkingcat_white.gif", System.UriKind.RelativeOrAbsolute)));
             catImage.Width = 300;
             catImage.Height = 300;
-            catImage.Margin = new Thickness(0, 100, 0, 0);
+            catImage.Margin = new Thickness(0, 170, 0, 0);
             catImage.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            catImage.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             grid.Children.Add(catImage);
         }
     }

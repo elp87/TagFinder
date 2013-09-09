@@ -35,10 +35,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="elp87.TagReader">
-      <HintPath>..\..\..\Visual Studio 2012\Projects\TagReader\elp87.TagReader\bin\Release\elp87.TagReader.dll</HintPath>
+      <HintPath>..\..\..\Visual Studio 2012\Projects\Эксперименты\TagReader\elp87.TagReader\bin\Release\elp87.TagReader.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Windows.Shell, Version=3.5.41019.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="ribboncontrolslibrary, Version=3.5.41019.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />

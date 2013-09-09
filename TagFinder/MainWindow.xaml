@@ -8,6 +8,6 @@
         <TextBox x:Name="textBoxArtist" Height="23" Margin="10,47,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBox x:Name="textBoxAlbum" Height="23" Margin="10,87,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBox x:Name="textBoxTitle" Height="23" Margin="10,127,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <ProgressBar x:Name="progressBar" Height="19" Margin="10,503,10,0" VerticalAlignment="Top" RenderTransformOrigin="-0.12,0.368"/>
+        <ProgressBar x:Name="progressBar" Height="19" Margin="10,0,10,67" VerticalAlignment="Bottom" RenderTransformOrigin="-0.12,0.368"/>
     </Grid>
 </Window>
