@@ -1,6 +1,7 @@
 ﻿using elp87.TagReader;
 using System.ComponentModel;
 using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -24,6 +25,8 @@ namespace WpfApplication4
         Image catImage;
         string path;
         string[] _fileNames;
+        string _maskString;
+        byte[] _mask;
 
         public MainWindow()
         {
@@ -38,6 +41,8 @@ namespace WpfApplication4
 
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, new System.Action(() => addCatImage() ));
 
+            _mask = Encoding.ASCII.GetBytes(_maskString);
+
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(reportFile))
             {
                 double value = 0;
@@ -46,8 +51,8 @@ namespace WpfApplication4
                     Dispatcher.Invoke(updProgress, new object[] { System.Windows.Controls.ProgressBar.ValueProperty, ++value });
                     try
                     {
-                        MP3File mp3 = new MP3File(fileName);
-                        if (mp3.id3v2.header.flagField.extendedHeader)
+                        //MP3File mp3 = new MP3File(fileName);
+                        if (ByteArray.FindSubArray(File.ReadAllBytes(fileName), _mask) != -1)//(mp3.id3v2.header.flagField.extendedHeader)
                         {
                             file.WriteLine("SUCCESS - " + fileName);
                         }
@@ -67,6 +72,12 @@ namespace WpfApplication4
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            _maskString = textBoxMask.Text;
+            if (_maskString == "")
+            {
+                System.Windows.MessageBox.Show("Поле маски пустое");
+                return;
+            }
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.FileName = "Document";
