@@ -1,5 +1,6 @@
 ﻿using elp87.TagReader;
 using System.ComponentModel;
+using System;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -20,6 +21,7 @@ namespace WpfApplication4
     {
         delegate void UpdateProgressBarDelegate(DependencyProperty dp, object value);
 
+        int time;
         string reportFile;
         BackgroundWorker worker;
         Image catImage;
@@ -27,12 +29,17 @@ namespace WpfApplication4
         string[] _fileNames;
         string _maskString;
         byte[] _mask;
+        System.Windows.Threading.DispatcherTimer timer;
 
         public MainWindow()
         {
             InitializeComponent();
             worker = new BackgroundWorker();
             worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+
+            timer = new System.Windows.Threading.DispatcherTimer();
+            timer.Tick += new EventHandler(timerTick);
+            timer.Interval = new TimeSpan(0, 0, 1);
         }
 
         private void worker_DoWork(object sender, DoWorkEventArgs e)
@@ -51,8 +58,8 @@ namespace WpfApplication4
                     Dispatcher.Invoke(updProgress, new object[] { System.Windows.Controls.ProgressBar.ValueProperty, ++value });
                     try
                     {
-                        //MP3File mp3 = new MP3File(fileName);
-                        if (ByteArray.FindSubArray(File.ReadAllBytes(fileName), _mask) != -1)//(mp3.id3v2.header.flagField.extendedHeader)
+                        MP3File mp3 = new MP3File(fileName);
+                        if (ByteArray.FindSubArray(mp3.id3v2.GetTagArray(), _mask) != -1)
                         {
                             file.WriteLine("SUCCESS - " + fileName);
                         }
@@ -67,7 +74,8 @@ namespace WpfApplication4
             }
 
             Dispatcher.Invoke(DispatcherPriority.Normal, new System.Action(() => grid.Children.Remove(catImage) ));
-            System.Windows.MessageBox.Show("Закончено");
+            System.Windows.MessageBox.Show("Закончено - " + time.ToString() + " секунд");
+            timer.Stop();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -92,6 +100,8 @@ namespace WpfApplication4
                     _fileNames = Directory.GetFiles(path, "*.mp3", SearchOption.AllDirectories);
                     progressBar.Maximum = _fileNames.Length;
                     progressBar.Value = 0;
+                    time = 0;
+                    timer.Start();
                     worker.RunWorkerAsync();
                 }
             }
@@ -107,6 +117,11 @@ namespace WpfApplication4
             catImage.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
             catImage.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             grid.Children.Add(catImage);
+        }
+
+        private void timerTick(object sender, EventArgs e)
+        {
+            time++;
         }
     }
 }
