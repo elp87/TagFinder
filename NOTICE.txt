@@ -1,2 +1,3 @@
 WPF Animated GIF (http://wpfanimatedgif.codeplex.com/) - by tom103 under Apache License 2.0 (Apache)
 TagReader (https://github.com/elp87/TagReader) - by elp87 under LGPL 2.1
+Cat icon (http://iconka.com/cat-power/) - by http://iconka.com/ (free to use)
